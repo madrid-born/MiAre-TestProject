@@ -1,0 +1,1 @@
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="MiAre_TestProject.MvcApplication" Language="C#" %>
