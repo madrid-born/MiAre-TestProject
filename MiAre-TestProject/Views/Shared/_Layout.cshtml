@@ -18,11 +18,30 @@
             </button>
             @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
         </div>
+        @{
+            var userName = User.Identity.Name;
+            if (Request.IsAuthenticated)
+            {
+                var id = (FormsIdentity)User.Identity;
+                var ticket = id.Ticket;
+                userName = ticket.Name;
+            }
+        }
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                @* <li>@Html.ActionLink("About", "About", "Home")</li> *@
-                @* <li>@Html.ActionLink("Contact", "Contact", "Home")</li> *@
+                <li>@Html.ActionLink("Create", "Create", "Home")</li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li class="navbar-text">Hello, @userName!</li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Login", "Login", "Account")</li>
+                    }
             </ul>
         </div>
     </div>
@@ -31,7 +50,7 @@
     @RenderBody()
     <hr/>
     <footer>
-        <p>&copy; @DateTime.Now.2024 - My ASP.NET Application</p>
+        <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
     </footer>
 </div>
 

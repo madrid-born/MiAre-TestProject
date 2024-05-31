@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,7 +17,13 @@ namespace MiAre_TestProject.Controllers
             return View(users);
         }
 
+        public ActionResult Create()
+        {
+            return View();
+        }
+
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(User user)
         {
             if (ModelState.IsValid)
@@ -28,16 +35,5 @@ namespace MiAre_TestProject.Controllers
             return View(user);
         }
         
-        // public ActionResult About()
-        // {
-        //     ViewBag.Message = "Your application description page.";
-        //     return View();
-        // }
-        //
-        // public ActionResult Contact()
-        // {
-        //     ViewBag.Message = "Your contact page.";
-        //     return View();
-        // }
     }
 }
