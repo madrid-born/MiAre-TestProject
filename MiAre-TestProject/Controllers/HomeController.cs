@@ -13,27 +13,24 @@ namespace MiAre_TestProject.Controllers
         private MyDbContext db = new MyDbContext();
         public ActionResult Index()
         {
-            var users = db.Users.ToList();
-            return View(users);
-        }
+            var userName = User.Identity.Name;
+            var currentuser = db.Users.SingleOrDefault(u => u.Username == userName);
 
-        public ActionResult Create()
-        {
+            if (currentuser != null)
+            {
+                var user = new User()
+                {
+                    Name = currentuser.Name,
+                    Email = currentuser.Email,
+                    IsAdmin = currentuser.IsAdmin,
+                    Username = currentuser.Username,
+                    Address = currentuser.Address,
+                    PreviousAddresses = currentuser.PreviousAddresses
+                };
+                return View(user);
+            }
+            
             return View();
         }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(User user)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Users.Add(user);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(user);
-        }
-        
     }
 }

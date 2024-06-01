@@ -16,6 +16,24 @@ namespace MiAre_TestProject.Controllers
         {
             return View();
         }
+        
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Users.Add(user);
+                db.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
+            return View(user);
+        }
 
         // POST: Account/Login
         [HttpPost]
