@@ -14,19 +14,11 @@ namespace MiAre_TestProject.Controllers
         public ActionResult Index()
         {
             var userName = User.Identity.Name;
-            var currentuser = db.Users.SingleOrDefault(u => u.Username == userName);
+            var user = db.GetUserByUsername(userName);
 
-            if (currentuser != null)
+            if (user != null)
             {
-                var user = new User()
-                {
-                    Name = currentuser.Name,
-                    Email = currentuser.Email,
-                    IsAdmin = currentuser.IsAdmin,
-                    Username = currentuser.Username,
-                    Address = currentuser.Address,
-                    PreviousAddresses = currentuser.PreviousAddresses
-                };
+                user.DeserializePreviousAddresses();
                 return View(user);
             }
             

@@ -13,7 +13,7 @@
             <h4>Are You Admin: @(Model.IsAdmin ? "Yes" : "No")</h4>
         </div>
         
-        if (Model.PreviousAddresses != null && Model.PreviousAddresses.Any())
+        if (Model.PreviousAddresses != null)
         {
             <h4>Previous Addresses:</h4>
             <ul>
@@ -28,6 +28,20 @@
             <h4>No previous addresses available.</h4>
         }
         
+        <br/>
+        
+        if (Model.IsAdmin)
+        {
+            <h4>You are admin so you can edit others addresses</h4>
+            <a href="@Url.Action("ManageUsers", "Management")" class="btn btn-primary">Manage Users</a>
+
+        }
+        else
+        {
+            <h4>You Can edit your address</h4>
+            <a href="@Url.Action("EditAddress", "Management", new { id = Model.Id })" class="btn btn-primary">Edit Address</a>
+
+        }
     }
     else
     {

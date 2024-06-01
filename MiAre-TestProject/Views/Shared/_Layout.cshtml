@@ -23,8 +23,7 @@
             if (Request.IsAuthenticated)
             {
                 var id = (FormsIdentity)User.Identity;
-                var ticket = id.Ticket;
-                userName = ticket.Name;
+                userName = id.Ticket.Name;
             }
         }
         <div class="navbar-collapse collapse">

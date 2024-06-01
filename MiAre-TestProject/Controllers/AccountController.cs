@@ -28,9 +28,21 @@ namespace MiAre_TestProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Users.Add(user);
-                db.SaveChanges();
-                return RedirectToAction("Index", "Home");
+                if (db.Users.Any(u => u.Email == user.Email))
+                {
+                    ModelState.AddModelError("", "this email has an account already");
+                }
+                else if (db.Users.Any(u => u.Username == user.Username))
+                {
+                    ModelState.AddModelError("", "this username already been taken");
+                }
+                else
+                {
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                    FormsAuthentication.SetAuthCookie(user.Username, false);
+                    return RedirectToAction("Index", "Home");
+                }
             }
             return View(user);
         }
